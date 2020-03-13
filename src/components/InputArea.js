@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import Select from './SelectField';
 import axios from 'axios';
+import AwaitiInput from './states/AwaitInput';
+import seedFormat from './seedFormat';
+import SeedShow from './states/SeedShow';
 
 export default () => {
-	const [model, setModel] = useState('Artist');
+	const [model, setModel] = useState('artist');
 	const [fields, setFields] = useState([]);
-	const [copies, setCopies] = useState(10);
+	const [copies, setCopies] = useState(2);
+	const [seeds, setSeeds] = useState('');
+	const [state, setState] = useState('awaitInput');
 
 	const generateRequest = e => {
 		e.preventDefault();
@@ -15,71 +18,49 @@ export default () => {
 		req.data = {};
 		fields.map(field => (req.data[field.value] = field.value));
 		req.data._repeat = copies;
-		generateSeeds(req);
+		fetchSeedData(req);
 	};
 
-	const generateSeeds = async req => {
-		const resJSON = await axios.post('https://app.fakejson.com/q', req);
-		console.log(resJSON);
+	const fetchSeedData = async req => {
+		setState('loading');
+		try {
+			const res = await axios.post('https://app.fakejson.com/q', req);
+			console.log(res);
+			generateSeedStrings(res);
+			setState('show');
+		} catch (error) {
+			console.error(error);
+			setState('error');
+		}
+	};
+
+	const generateSeedStrings = res => {
+		const capitalizedModel = model.replace(/\b\w/g, l => l.toUpperCase());
+		setSeeds(seedFormat(capitalizedModel, res.data, copies));
 	};
 
 	return (
-		<Inputs>
-			<ModelName
-				placeholder="What's the model name?"
-				autoFocus
-				onChange={e => setModel(e.target.value)}
-				value={model}
-				required
-			/>
-			<Select
+		<>
+			<AwaitiInput
+				model={model}
+				setModel={setModel}
+				fields={fields}
 				setFields={setFields}
-				required={true}
-				autoFocus={true}
-				value={fields}
+				copies={copies}
+				setCopies={setCopies}
+				generateRequest={generateRequest}
 			/>
-			<NumberOfSeeds
-				onChange={e => setCopies(parseInt(e.target.value))}
-				placeholder='Number'
-				type='number'
-				required
-				value={copies}
-				min='1'
-				max='20'
-			/>
-			<Submit onClick={generateRequest}>Generate</Submit>
-		</Inputs>
+			{
+				{
+					loading: <Loading />,
+					show: <SeedShow seeds={seeds} />,
+					error: <Error />,
+				}[state]
+			}
+		</>
 	);
 };
 
-const Inputs = styled.form`
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	> * {
-		margin: 5rem 0.5rem;
-		height: 2.5rem;
-		font-size: 1em;
-	}
-`;
+const Loading = () => <div>Loading...</div>;
 
-const NumberOfSeeds = styled.input`
-	width: 7rem;
-	padding: 5px 15px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-`;
-
-const Submit = styled.button`
-	padding: 5px 15px;
-	border-radius: 5px;
-	border: 2px solid blue;
-	background-color: white;
-`;
-
-const ModelName = styled.input`
-	padding: 5px 15px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-`;
+const Error = () => <div>There has been an error</div>;
