@@ -1,4 +1,4 @@
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -32,14 +32,33 @@ export default ({ setFields }) => {
 	return (
 		<StyledSelect
 			onChange={fields => setFields(fields)}
-			isMulti={true}
+			isMulti
 			options={options}
 			placeholder={'Data...'}
+			styles={{
+				menu: provided => ({
+					...provided,
+					backgroundColor: props => props.theme.main,
+					color: props => props.theme.hover,
+				}),
+				control: provided => ({
+					...provided,
+					backgroundColor: props => props.theme.main,
+				}),
+				option: provided => ({
+					...provided,
+					color: props => {
+						console.log(provided);
+						return props.theme.hover;
+					},
+				}),
+			}}
 		/>
 	);
 };
 
-const StyledSelect = styled(Select)`
+const StyledSelect = styled(CreatableSelect)`
 	width: 50%;
 	height: 2.5rem;
+	color: ${props => props.theme.fontColor};
 `;

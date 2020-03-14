@@ -3,6 +3,7 @@ import axios from 'axios';
 import AwaitiInput from './states/AwaitInput';
 import seedFormat from './seedFormat';
 import SeedShow from './states/SeedShow';
+import styled from 'styled-components';
 
 export default () => {
 	const [model, setModel] = useState('Artist');
@@ -51,7 +52,7 @@ export default () => {
 			/>
 			{
 				{
-					loading: <Loading />,
+					loading: <Loading>Loading...</Loading>,
 					show: <SeedShow seeds={seeds} />,
 					error: <Error />,
 				}[state]
@@ -60,6 +61,10 @@ export default () => {
 	);
 };
 
-const Loading = () => <div>Loading...</div>;
+const Loading = styled.p`
+	color: ${props => props.theme.fontColor};
+	font-family: Inter, sans-serif;
+	text-align: center;
+`;
 
 const Error = () => <div>There has been an error</div>;

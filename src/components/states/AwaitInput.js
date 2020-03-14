@@ -15,6 +15,7 @@ export default ({
 		<ModelName
 			placeholder="What's the model name?"
 			autoFocus
+			type={'search'}
 			onChange={e => setModel(e.target.value)}
 			value={model}
 			required
@@ -49,6 +50,8 @@ const Inputs = styled.form`
 		margin: 5rem 0.5rem;
 		height: 2.5rem;
 		font-size: 1em;
+		background-color: ${props => props.theme.inputs};
+		color: ${props => props.theme.fontColor};
 	}
 
 	@media only screen and (max-width: 600px) {
@@ -65,7 +68,7 @@ const NumberOfSeeds = styled.input`
 	width: 7rem;
 	padding: 5px 15px;
 	border-radius: 5px;
-	border: 1px solid #ccc;
+	border: 1px solid ${props => props.theme.outline};
 	@media only screen and (max-width: 600px) {
 		width: 100%;
 	}
@@ -74,12 +77,12 @@ const NumberOfSeeds = styled.input`
 export const Submit = styled.button`
 	padding: 5px 15px;
 	border-radius: 5px;
-	border: 2px solid blue;
-	background-color: white;
+	border: 1px solid ${props => props.theme.accent};
+	background-color: ${props => props.theme.inputs};
 `;
 
 const ModelName = styled.input`
 	padding: 5px 15px;
 	border-radius: 5px;
-	border: 1px solid #ccc;
+	border: 1px solid ${props => props.theme.outline};
 `;

@@ -1,7 +1,25 @@
 @import url('https://fonts.googleapis.com/css?family=Inter:400,700,900&display=swap');
 
+:root {
+	--main-color: white;
+	--inputs: white;
+}
+
+.dark {
+	--main-color: #161616;
+	--inputs: #292828;
+}
+
 * {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
+}
+
+body {
+	background-color: var(--main-color);
+}
+
+input {
+	background-color: var(--inputs);
 }

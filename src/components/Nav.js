@@ -1,9 +1,11 @@
 import React from 'react';
+import Toggle from './Toggle';
 import styled from 'styled-components';
 
-export default () => {
+export default ({ setTheme, currentTheme }) => {
 	return (
 		<Nav>
+			<Toggle theme={currentTheme} setTheme={setTheme} />
 			<h1>Seedr</h1>
 			<h2>It's missing an 'e' so it's cool</h2>
 		</Nav>
@@ -14,10 +16,11 @@ const Nav = styled.nav`
 	width: 100%;
 	padding: 0.5rem;
 	background-color: aquamarine;
-	color: white;
 	font-family: Inter;
-	> * {
+	> h1,
+	h2 {
 		text-align: center;
+		color: ${props => props.theme.headingFontColor};
 	}
 	h1 {
 		font-size: 2rem;
