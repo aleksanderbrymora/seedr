@@ -4,7 +4,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import InputArea from './InputArea';
 
 function App() {
-	const [isDark, setIsDark] = useState(true);
+	const [isDark, setIsDark] = useState(false);
 
 	return (
 		<Background isDark={isDark} className='App'>

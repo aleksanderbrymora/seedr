@@ -6,7 +6,7 @@ import SeedShow from './states/SeedShow';
 import styled from 'styled-components';
 
 export default () => {
-	const [model, setModel] = useState('Artist');
+	const [model, setModel] = useState('');
 	const [fields, setFields] = useState([]);
 	const [copies, setCopies] = useState(2);
 	const [seeds, setSeeds] = useState('');
