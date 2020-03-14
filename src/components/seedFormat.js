@@ -1,6 +1,5 @@
 export default (model, data, number) => {
 	let seed = `${model}.destroy_all`;
-	console.log({ data });
 	for (let i = 0; i < number; i++) {
 		seed += `\r\n${model[0].toLowerCase()}${i + 1} = ${model}.create `;
 		const properties = Object.keys(data[i]).map(

@@ -19,12 +19,6 @@ export default ({
 			value={model}
 			required
 		/>
-		<Select
-			setFields={setFields}
-			required={true}
-			autoFocus={true}
-			value={fields}
-		/>
 		<NumberOfSeeds
 			onChange={e => setCopies(parseInt(e.target.value))}
 			placeholder='Number'
@@ -33,6 +27,12 @@ export default ({
 			value={copies}
 			min='1'
 			max='20'
+		/>
+		<Select
+			setFields={setFields}
+			required={true}
+			autoFocus={true}
+			value={fields}
 		/>
 		<Submit onClick={generateRequest}>Generate</Submit>
 	</Inputs>
@@ -50,6 +50,15 @@ const Inputs = styled.form`
 		height: 2.5rem;
 		font-size: 1em;
 	}
+
+	@media only screen and (max-width: 600px) {
+		flex-direction: column;
+		padding: 1rem;
+		> * {
+			margin: 0.5rem;
+			width: 100%;
+		}
+	}
 `;
 
 const NumberOfSeeds = styled.input`
@@ -57,9 +66,12 @@ const NumberOfSeeds = styled.input`
 	padding: 5px 15px;
 	border-radius: 5px;
 	border: 1px solid #ccc;
+	@media only screen and (max-width: 600px) {
+		width: 100%;
+	}
 `;
 
-const Submit = styled.button`
+export const Submit = styled.button`
 	padding: 5px 15px;
 	border-radius: 5px;
 	border: 2px solid blue;

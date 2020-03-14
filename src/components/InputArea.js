@@ -5,7 +5,7 @@ import seedFormat from './seedFormat';
 import SeedShow from './states/SeedShow';
 
 export default () => {
-	const [model, setModel] = useState('artist');
+	const [model, setModel] = useState('Artist');
 	const [fields, setFields] = useState([]);
 	const [copies, setCopies] = useState(2);
 	const [seeds, setSeeds] = useState('');
@@ -25,7 +25,6 @@ export default () => {
 		setState('loading');
 		try {
 			const res = await axios.post('https://app.fakejson.com/q', req);
-			console.log(res);
 			generateSeedStrings(res);
 			setState('show');
 		} catch (error) {
